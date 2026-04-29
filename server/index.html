@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Display 7 Segmentos</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#1e3c72,#2a5298);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.container{
+  text-align:center;
+  background: rgba(0,0,0,0.3);
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+h1{
+  margin-bottom:20px;
+}
+
+.display{
+  font-size:60px;
+  margin-bottom:20px;
+  background:black;
+  padding:20px;
+  border-radius:10px;
+  color:#00ff88;
+  font-weight:bold;
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns: repeat(5, 60px);
+  gap:10px;
+  justify-content:center;
+}
+
+button{
+  width:60px;
+  height:60px;
+  font-size:20px;
+  border:none;
+  border-radius:10px;
+  background:#00c6ff;
+  color:white;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+button:hover{
+  background:#0072ff;
+  transform:scale(1.1);
+}
+
+button:active{
+  transform:scale(0.95);
+}
+
+#estado{
+  margin-top:20px;
+  font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Control Display</h1>
+
+  <div class="display" id="pantalla">0</div>
+
+  <div class="buttons">
+    <button onclick="enviar(0)">0</button>
+    <button onclick="enviar(1)">1</button>
+    <button onclick="enviar(2)">2</button>
+    <button onclick="enviar(3)">3</button>
+    <button onclick="enviar(4)">4</button>
+    <button onclick="enviar(5)">5</button>
+    <button onclick="enviar(6)">6</button>
+    <button onclick="enviar(7)">7</button>
+    <button onclick="enviar(8)">8</button>
+    <button onclick="enviar(9)">9</button>
+  </div>
+
+  <div id="estado">Esperando número...</div>
+</div>
+
+<script>
+function enviar(num){
+  document.getElementById("pantalla").innerText = num;
+
+  fetch("/" + num)
+    .then(response => {
+      if(response.ok){
+        document.getElementById("estado").innerText = "Número " + num + " enviado";
+      } else {
+        document.getElementById("estado").innerText = "Error al enviar";
+      }
+    })
+    .catch(() => {
+      document.getElementById("estado").innerText = "Servidor no conectado";
+    });
+}
+</script>
+
+</body>
+</html>
